@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+  background-color: #877eff;
+}
+
+::-webkit-scrollbar {
+  background: gray;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: white;
+}
+
+.top-creators::-webkit-scrollbar {
+  width: 7px;
+}
+.top-creators::-webkit-scrollbar-thumb {
+  background-color: white;
+}
+.created-post::-webkit-scrollbar {
+  width: 7px;
+}
+.created-post::-webkit-scrollbar-thumb {
+  background-color: white;
+}
