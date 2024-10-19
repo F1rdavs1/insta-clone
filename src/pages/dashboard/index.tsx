@@ -5,7 +5,6 @@ import Saved from "./Saved";
 import Reels from "./Reels";
 import Chats from "./Chats";
 import CreatePosts from "./CreatePosts";
-import LogOut from "./LogOut";
 import Settings from "./Settings";
 
 export {
@@ -16,6 +15,5 @@ export {
   Reels,
   Chats,
   CreatePosts,
-  LogOut,
   Settings,
 };
