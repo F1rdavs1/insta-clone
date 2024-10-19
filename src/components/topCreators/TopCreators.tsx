@@ -4,7 +4,8 @@ import {
   useUnfollowMutation,
   useGetUserQuery,
 } from "../../redux/api/user-slice";
-import Avatar from "../../assets/images/user.png"
+import Avatar from "../../assets/images/user.png";
+import { useState } from "react";
 
 const TopCreators = () => {
   const { data = [] } = useGetAllUsersQuery(true);
@@ -14,12 +15,18 @@ const TopCreators = () => {
   const username = currentUser?.username || "";
   const followUserData = useGetUserQuery(username);
 
-  const handleFollow = (username: string): void => {
-    follow(username);
+  const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
+
+  const handleFollow = async (username: string): Promise<void> => {
+    setLoading((prev) => ({ ...prev, [username]: true })); 
+    await follow(username);
+    setLoading((prev) => ({ ...prev, [username]: false })); 
   };
 
-  const handleUnfollow = (username: string): void => {
-    unfollow(username);
+  const handleUnfollow = async (username: string): Promise<void> => {
+    setLoading((prev) => ({ ...prev, [username]: true })); 
+    await unfollow(username);
+    setLoading((prev) => ({ ...prev, [username]: false })); 
   };
 
   return (
@@ -45,17 +52,19 @@ const TopCreators = () => {
                     (item: any) => item.username === user.username
                   ) ? (
                     <button
-                      className="text-white mt-[12px] bg-red-500 px-[18px] py-[6px] rounded-[8px]"
+                      className="text-white mt-[12px] bg-red-500 px-[18px] py-[6px] rounded-[8px] flex items-center"
                       onClick={() => handleUnfollow(user.username)}
+                      disabled={loading[user.username]} 
                     >
-                      Unfollow
+                      {loading[user.username] ? "Unfollowing..." : "Unfollow"}
                     </button>
                   ) : (
                     <button
-                      className="text-white mt-[12px] bg-[rgba(135,126,255,1)] px-[18px] py-[6px] rounded-[8px] follow-button"
+                      className="text-white mt-[12px] bg-[rgba(135,126,255,1)] px-[18px] py-[6px] rounded-[8px] follow-button flex items-center"
                       onClick={() => handleFollow(user.username)}
+                      disabled={loading[user.username]} 
                     >
-                      Follow
+                      {loading[user.username] ? "Following..." : "Follow"}
                     </button>
                   )}
                 </div>
