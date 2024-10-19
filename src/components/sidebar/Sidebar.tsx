@@ -33,6 +33,7 @@ const Sidebar = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   return (
     <>
       <div className="bg-[#09090A] h-[100vh] overflow-y-auto sidebar py-[20px] w-[20%]">
@@ -52,76 +53,86 @@ const Sidebar = () => {
           />
           <div className="">
             <h3 className="text-white font-bold text-[24px] pt-[20px]">
-              {userData?.username}
+              {data?.fullName || userData?.username}
             </h3>
             <h3 className="text-slate-400 font-bold text-[16px]">
-              @{data?.username}
+              @{data?.username || userData?.username}
             </h3>
           </div>
         </div>
         <div className="space-y-[10px] mx-[20px]">
           <NavLink
-            to={"/"}
-            className={
-              "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200 group:"
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
             }
           >
-            <img
-              src={NavbarHome}
-              alt="Home icon"
-              className="group-hover:fill-red-500"
-            />
+            <img src={NavbarHome} alt="Home icon" />
             Home
           </NavLink>
           <NavLink
-            to={"/explore"}
-            className={
-              "text-white flex items-center gap-[16px] py-[10px] pl-[16px]  rounded-md hover:bg-[#877EFF] duration-200"
+            to="/explore"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
             }
           >
             <img src={NavbarExplore} alt="Explore" />
             Explore
           </NavLink>
           <NavLink
-            to={"/people"}
-            className={
-              "text-white flex items-center gap-[16px] py-[10px] pl-[16px]  rounded-md hover:bg-[#877EFF] duration-200"
+            to="/people"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
             }
           >
             <img src={NavbarPeople} alt="People" />
-            Explore
+            People
           </NavLink>
           <NavLink
-            to={"/saved"}
-            className={
-              "text-white flex items-center gap-[16px] py-[10px] pl-[16px]  rounded-md hover:bg-[#877EFF] duration-200"
+            to="/saved"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
             }
           >
             <img src={NavbarSaved} alt="Saved" />
             Saved
           </NavLink>
           <NavLink
-            to={"/reels"}
-            className={
-              "text-white flex items-center gap-[16px] py-[10px] pl-[16px]  rounded-md hover:bg-[#877EFF] duration-200"
+            to="/reels"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
             }
           >
             <img src={NavbarReels} alt="Reels" />
             Reels
           </NavLink>
           <NavLink
-            to={"/chats"}
-            className={
-              "text-white flex items-center gap-[16px] py-[10px] pl-[16px]  rounded-md hover:bg-[#877EFF] duration-200"
+            to="/chats"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
             }
           >
             <img src={NavbarChats} alt="Chats" />
             Chats
           </NavLink>
           <NavLink
-            to={"/create-post"}
-            className={
-              "text-white flex items-center gap-[16px] py-[10px] pl-[16px]  rounded-md hover:bg-[#877EFF] duration-200"
+            to="/create-post"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
             }
           >
             <img src={NavbarCreatePost} alt="Create Post" />
@@ -137,12 +148,14 @@ const Sidebar = () => {
               Log Out
             </button>
             <NavLink
-              to={"/settings"}
-              className={
-                "text-white flex items-center gap-[16px] py-[10px] pl-[16px]  rounded-md hover:bg-[#877EFF] duration-200"
+              to="/settings"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-[#877EFF] text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md duration-200"
+                  : "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200"
               }
             >
-              <img src={NavbarSettings} alt="Create Post" />
+              <img src={NavbarSettings} alt="Settings" />
               Settings
             </NavLink>
           </div>
