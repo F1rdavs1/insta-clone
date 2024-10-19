@@ -20,7 +20,7 @@ export const userApi = api.injectEndpoints({
     }),
     getAllUsers: build.query({
       query: () => ({
-        url: "/api/user/all?limit=20",
+        url: "/api/user/all?limit=100",
         method: "GET",
       }),
       providesTags: ["User"],
@@ -36,14 +36,14 @@ export const userApi = api.injectEndpoints({
         url: `/api/user/follow/${username}`,
         method: "POST",
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: [{ type: "User" }],
     }),
     unfollow: build.mutation({
       query: (username) => ({
         url: `/api/user/unfollow/${username}`,
         method: "POST",
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: [{ type: "User" }],
     }),
   }),
 });

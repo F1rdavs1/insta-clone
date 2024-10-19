@@ -27,7 +27,7 @@ const Sidebar = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     localStorage.removeItem("token");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   const handleCancel = () => {
@@ -35,7 +35,7 @@ const Sidebar = () => {
   };
   return (
     <>
-      <div className="bg-[#09090A] h-[100vh] overflow-y-auto sidebar py-[20px]">
+      <div className="bg-[#09090A] h-[100vh] overflow-y-auto sidebar py-[20px] w-[20%]">
         <div className="flex items-center gap-[8px] pl-[16px] ">
           <img src={SnapGramIcon} alt="Snapgram" />
           <h2 className="font-bold text-[28px] leading-[36px] text-white">
@@ -52,10 +52,10 @@ const Sidebar = () => {
           />
           <div className="">
             <h3 className="text-white font-bold text-[24px] pt-[20px]">
-              {data?.fullName}
+              {userData?.username}
             </h3>
             <h3 className="text-slate-400 font-bold text-[16px]">
-              {data?.username}
+              @{data?.username}
             </h3>
           </div>
         </div>
@@ -66,7 +66,11 @@ const Sidebar = () => {
               "text-white flex items-center gap-[16px] py-[10px] pl-[16px] rounded-md hover:bg-[#877EFF] duration-200 group:"
             }
           >
-            <img src={NavbarHome} alt="Home icon" className="group-hover:fill-red-500" />
+            <img
+              src={NavbarHome}
+              alt="Home icon"
+              className="group-hover:fill-red-500"
+            />
             Home
           </NavLink>
           <NavLink

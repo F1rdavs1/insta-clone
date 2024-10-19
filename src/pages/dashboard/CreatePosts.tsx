@@ -1,13 +1,9 @@
-import Sidebar from "../../components/sidebar/Sidebar";
 import CreatePostIcon from "../../assets/images/CreatePost.svg";
 import ImageVideo from "../../assets/images/image-video.png";
 const CreatePosts = () => {
   return (
-    <div className="w-[100%] flex">
-      <div className="w-[20%]">
-        <Sidebar />
-      </div>
-      <div className="w-[50%] bg-[black] overflow-y-auto h-[100vh] py-[80px] px-[60px] text-white created-post">
+    <div className="w-[80%] flex">
+      <div className="w-[70%] bg-[black] overflow-y-auto h-[100vh] py-[80px] px-[60px] text-white created-post">
         <div className="flex items-center gap-[20px] mb-[50px] text-white">
           <img
             src={CreatePostIcon}
