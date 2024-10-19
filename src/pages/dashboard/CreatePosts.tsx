@@ -12,7 +12,7 @@ const CreatePosts = () => {
           />
           <p className="text-4xl font-bold">Create a Post</p>
         </div>
-        <form className="flex flex-col gap-9">
+        <form autoComplete="off" className="flex flex-col gap-9">
           <label className="flex flex-col gap-3">
             <h3 className="font-medium text-lg">Caption</h3>
             <textarea
