@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { SuspenseComponent as Suspense } from "../../utils";
 import { LazyExoticComponent, lazy } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
+import ProfileDetail from "../../pages/dashboard/ProfileDetail";
 
 const Home: LazyExoticComponent<any> = lazy(
   () => import("../../pages/dashboard/Home")
@@ -94,6 +95,14 @@ const DashboardRoutes = () => {
           element={
             <Suspense>
               <Settings />
+            </Suspense>
+          }
+        />
+                <Route
+          path="/profile/:username"
+          element={
+            <Suspense>
+              <ProfileDetail />
             </Suspense>
           }
         />

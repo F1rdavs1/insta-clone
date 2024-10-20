@@ -9,9 +9,11 @@ const Register = () => {
   const navigate = useNavigate();
   const [createUser] = useRegisterMutation();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); 
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.target as HTMLFormElement);
     const full_name = formData.get("name") as string;
     const email = formData.get("email") as string;
@@ -33,6 +35,8 @@ const Register = () => {
     } catch (error) {
       setErrorMessage("Registration failed. Please try again.");
       console.error("Registration error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,7 +67,7 @@ const Register = () => {
             </label>
 
             <label>
-              <h2 className="font-medium text-lg leading-6 text-white mb-2">
+              <h2 className="font-medium text-lg leading-6 text-white mt-[20px] mb-2">
                 Username
               </h2>
               <input
@@ -100,8 +104,9 @@ const Register = () => {
             <button
               className="w-full py-2 bg-purple-600 rounded-md text-white font-semibold hover:bg-purple-700 transition duration-200"
               type="submit"
+              disabled={loading} 
             >
-              Sign Up
+              {loading ? "Signing Up..." : "Sign Up"} 
             </button>
           </form>
           <div className="mt-6">

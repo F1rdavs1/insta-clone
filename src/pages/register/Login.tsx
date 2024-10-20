@@ -1,3 +1,4 @@
+import { useState } from "react";
 import LoginPage from "../../assets/images/login.png";
 import googleIcon from "../../assets/images/google-icon.svg";
 import SnapgramIcon from "../../assets/images/snapgramIcon.svg";
@@ -13,24 +14,26 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const context = useContext(Context);
+  const [loading, setLoading] = useState(false); 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const formDataToJson = Object.fromEntries(formData);
 
+    setLoading(true); 
     try {
       const res = await loginUser(formDataToJson).unwrap();
       dispatch(setToken(res.accessToken));
       dispatch(setUser(res.user));
       context?.setToken(res.accessToken);
 
-      
       window.localStorage.setItem("userData", JSON.stringify(formDataToJson));
-
       navigate("/");
     } catch (error) {
       console.log("Login failed:", error);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -62,6 +65,7 @@ const Login = () => {
                 className="w-[400px] px-4 py-3 text-sm bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
                 placeholder="Enter your username"
                 name="username"
+                required
               />
             </label>
           </div>
@@ -76,17 +80,22 @@ const Login = () => {
                 className="w-full px-4 py-3 text-sm bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
                 placeholder="Enter your password"
                 name="password"
+                required
               />
             </label>
           </div>
 
           <button
-            className="w-full py-3 bg-purple-600 rounded-lg text-white font-semibold text-base leading-6 hover:bg-purple-700 transition duration-200"
+            className={`w-full py-3 rounded-lg text-white font-semibold text-base leading-6 transition duration-200 ${
+              loading ? "bg-gray-500 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
+            }`}
             type="submit"
+            disabled={loading} 
           >
-            Log In
+            {loading ? "Logging in..." : "Log In"} 
           </button>
         </form>
+
         <button
           className="flex justify-center items-center gap-3 w-full py-3 bg-white rounded-lg text-black font-semibold text-base leading-6 mt-5 mb-8 hover:bg-[#cdc9c9] transition duration-300"
           type="button"

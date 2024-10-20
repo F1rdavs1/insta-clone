@@ -41,38 +41,40 @@ const People = () => {
       <div className="flex flex-wrap gap-5 ">
         {data.length > 0
           ? data.map((user: any, ind: number) => (
-              <div
-                key={ind}
-                className="user-card flex flex-col text-center items-center mb-4 py-[40px] border border-[#1F1F22] rounded-[20px] w-[303px]"
+            <div
+            key={ind}
+            className="user-card flex flex-col items-center mb-4 py-[40px] border border-[#1F1F22] rounded-[20px] w-[303px]"
+          >
+            <img
+              src={user?.photo || Avatar}
+              alt="Avatar"
+              className="w-[54px] h-[54px] rounded-full"
+            />
+            <div className="text-center mt-[24px] mb-[20px]">
+              <p className="text-white font-bold text-[24px] leading-[33.6px]  pb-[8px]">{user.username}</p>
+              <p className="text-[#7878A3] font-medium text-[18px] leading-[25px] ">{user.email}</p>
+            </div>
+            {followUserData.data?.following?.some(
+              (item: any) => item.username === user.username
+            ) ? (
+              <button
+                className="text-white bg-red-500 mt-[10px] px-[18px] py-[6px] rounded-[8px] flex items-center"
+                onClick={() => handleUnfollow(user.username)}
+                disabled={loading[user.username]}
               >
-                <img
-                  src={user?.photo || Avatar}
-                  alt="Avatar"
-                  className="w-[54px] h-[54px] rounded-full mr-4 text-white"
-                />
-                <div>
-                  <p className="text-white font-semibold">{user.username}</p>
-                  {followUserData.data?.following?.some(
-                    (item: any) => item.username === user.username
-                  ) ? (
-                    <button
-                      className="text-white mt-[12px] bg-red-500 px-[18px] py-[6px] rounded-[8px] flex items-center"
-                      onClick={() => handleUnfollow(user.username)}
-                      disabled={loading[user.username]}
-                    >
-                      {loading[user.username] ? "Unfollowing..." : "Unfollow"}
-                    </button>
-                  ) : (
-                    <button
-                      className="text-white mt-[12px] bg-[rgba(135,126,255,1)] px-[18px] py-[6px] rounded-[8px] follow-button flex items-center"
-                      onClick={() => handleFollow(user.username)}
-                      disabled={loading[user.username]}
-                    >
-                      {loading[user.username] ? "Following..." : "Follow"}
-                    </button>
-                  )}
-                </div>
-              </div>
+                {loading[user.username] ? "Unfollowing..." : "Unfollow"}
+              </button>
+            ) : (
+              <button
+                className="text-white bg-[rgba(135,126,255,1)] mt-[10px] px-[18px] py-[6px] rounded-[8px] follow-button flex items-center"
+                onClick={() => handleFollow(user.username)}
+                disabled={loading[user.username]}
+              >
+                {loading[user.username] ? "Following..." : "Follow"}
+              </button>
+            )}
+          </div>
+          
             ))
           : ""}
       </div>

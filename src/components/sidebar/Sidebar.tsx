@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import SnapGramIcon from "../../assets/images/snapgramIcon.svg";
 import { useGetUserQuery } from "../../redux/api/user-slice";
 import NavbarHome from "../../assets/images/home-icon.svg";
@@ -19,6 +19,7 @@ const Sidebar = () => {
   const username = userData?.username || "";
   const { data } = useGetUserQuery(username);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -34,16 +35,23 @@ const Sidebar = () => {
     setIsModalOpen(false);
   };
 
+  const handleProfileClick = () => {
+    navigate(`/profile/${userData?.username}`);
+  };
+
   return (
     <>
       <div className="bg-[#09090A] h-[100vh] overflow-y-auto sidebar py-[20px] w-[20%]">
-        <div className="flex items-center gap-[8px] pl-[16px] ">
+        <div className="flex items-center gap-[8px] pl-[16px]">
           <img src={SnapGramIcon} alt="Snapgram" />
           <h2 className="font-bold text-[28px] leading-[36px] text-white">
             Snapgram
           </h2>
         </div>
-        <div className="flex items-center gap-[5px] py-[20px] pl-[16px] cursor-pointer">
+        <div
+          className="flex items-center gap-[5px] py-[20px] pl-[16px] cursor-pointer my-profile"
+          onClick={handleProfileClick}
+        >
           <img
             className="w-[56px] h-[56px] rounded-[50%]"
             src={Avatar}
