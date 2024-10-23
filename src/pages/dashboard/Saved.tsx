@@ -1,6 +1,7 @@
+import NotFound from "../../components/NotFound/NotFound.jsx";
 
 const Saved = () => {
-  return <div>Saved</div>;
+  return <NotFound/>;
 };
 
 export default Saved;

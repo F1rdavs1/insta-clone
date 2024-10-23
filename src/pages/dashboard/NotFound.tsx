@@ -1,5 +1,8 @@
-const NotFound = () => {
-  return <div>NotFound</div>;
+import React from "react";
+import NotFound from "../../components/NotFound/NotFound";
+
+const NotFoundPage: React.FC = () => {
+  return <NotFound />;
 };
 
-export default NotFound;
+export default NotFoundPage;

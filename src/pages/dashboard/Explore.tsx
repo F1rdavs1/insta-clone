@@ -1,5 +1,7 @@
+import NotFound from "../../components/NotFound/NotFound.jsx";
+
 const Explore = () => {
-  return <div>Explore</div>;
+  return <NotFound/>;
 };
 
 export default Explore;

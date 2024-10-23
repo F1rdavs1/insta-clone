@@ -1,6 +1,7 @@
+import NotFound from "../../components/NotFound/NotFound.jsx";
 
 const Reels = () => {
-  return <div>Reels</div>;
+  return <NotFound/>;
 };
 
 export default Reels;

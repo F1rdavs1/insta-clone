@@ -1,5 +1,7 @@
+import NotFound from "../../components/NotFound/NotFound.jsx";
+
 const Chats = () => {
-  return <div>Chats</div>;
+  return <NotFound/>;
 };
 
 export default Chats;
