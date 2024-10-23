@@ -20,7 +20,7 @@ export const fileApi = api.injectEndpoints({
     }),
     getPosts: build.query({
       query: (params) => ({
-        url: "/api/user/feed?limit=100",
+        url: "/api/user/feed?limit=3000",
         params,
       }),
       providesTags: [],

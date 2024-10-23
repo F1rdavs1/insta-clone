@@ -3,6 +3,7 @@ import { SuspenseComponent as Suspense } from "../../utils";
 import { LazyExoticComponent, lazy } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ProfileDetail from "../../pages/dashboard/ProfileDetail";
+import NotFound from "../../pages/dashboard/NotFound";
 
 const Home: LazyExoticComponent<any> = lazy(
   () => import("../../pages/dashboard/Home")
@@ -98,11 +99,19 @@ const DashboardRoutes = () => {
             </Suspense>
           }
         />
-                <Route
+        <Route
           path="/profile/:username"
           element={
             <Suspense>
               <ProfileDetail />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Suspense>
+              <NotFound />
             </Suspense>
           }
         />

@@ -36,7 +36,7 @@ const TopCreators = () => {
       </h3>
       <div className="grid grid-cols-2 justify-between users-wrapper">
         {data.length > 0
-          ? data.slice(0, 10).map((user: any, ind: number) => (
+          ? data.slice(0, 8).map((user: any, ind: number) => (
               <div
                 key={ind}
                 className="user-card flex flex-col text-center items-center mb-4 py-[24px] px-[4px] border border-[#1F1F22] rounded-[20px] w-[150px]"

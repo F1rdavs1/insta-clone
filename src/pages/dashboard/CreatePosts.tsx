@@ -14,7 +14,7 @@ const CreatePosts = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadFiles] = useUploadFileMutation();
   const [createPost] = useCreatePostMutation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,7 +35,7 @@ const CreatePosts = () => {
     e.preventDefault();
     await handleUpload();
     clearForm();
-    navigate("/"); 
+    navigate("/");
   };
 
   const handleUpload = async () => {
@@ -63,7 +63,7 @@ const CreatePosts = () => {
     setAltText("");
     setFiles([]);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; 
+      fileInputRef.current.value = "";
     }
   };
 
@@ -81,7 +81,11 @@ const CreatePosts = () => {
           />
           <p className="text-4xl font-bold">Create a Post</p>
         </div>
-        <form onSubmit={handleSubmit} autoComplete="off" className="flex flex-col gap-9">
+        <form
+          onSubmit={handleSubmit}
+          autoComplete="off"
+          className="flex flex-col gap-9"
+        >
           <label className="flex flex-col gap-3">
             <h3 className="font-medium text-lg">Caption</h3>
             <textarea
@@ -93,11 +97,10 @@ const CreatePosts = () => {
             ></textarea>
           </label>
 
-
           <label className="flex flex-col gap-3  ">
             <h3 className="font-medium text-lg">Add Photos/Videos</h3>
             <div className="py-[48px] relative bg-[#101012] rounded-[10px] cursor-pointer">
-                            {files.length > 0 ? (
+              {files.length > 0 ? (
                 <div className="flex gap-3 flex-col">
                   <div className="flex gap-3 items-center justify-center">
                     {files.map((file) => (
@@ -112,7 +115,13 @@ const CreatePosts = () => {
                 </div>
               ) : (
                 <div className="text-center text-gray-500 flex flex-col gap-3">
-                  <img src={ImageVideo} alt="Image" width={96} height={77} className="mx-auto" />
+                  <img
+                    src={ImageVideo}
+                    alt="Image"
+                    width={96}
+                    height={77}
+                    className="mx-auto"
+                  />
                   <p>Drag photos and videos here</p>
                   <p className="text-sm">
                     SVG, PNG, JPG or GIF (max. 800x400px)
@@ -153,8 +162,8 @@ const CreatePosts = () => {
           <label className="flex flex-col gap-3 ">
             <span className="font-medium text-lg">Photo/Video Alt Text</span>
             <input
-            value={altText}
-            onChange={(e) => setAltText(e.target.value)}
+              value={altText}
+              onChange={(e) => setAltText(e.target.value)}
               name="content_alt"
               required
               className="p-4 outline-none bg-[#101012] rounded-[10px]"

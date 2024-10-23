@@ -11,7 +11,7 @@ import NavbarChats from "../../assets/images/chats.svg";
 import NavbarCreatePost from "../../assets/images/CreatePost.svg";
 import NavbarLogOut from "../../assets/images/Logout.svg";
 import NavbarSettings from "../../assets/images/Settings.svg";
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import { useState } from "react";
 
 const Sidebar = () => {
@@ -19,6 +19,7 @@ const Sidebar = () => {
   const username = userData?.username || "";
   const { data } = useGetUserQuery(username);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const showModal = () => {
@@ -36,7 +37,10 @@ const Sidebar = () => {
   };
 
   const handleProfileClick = () => {
-    navigate(`/profile/${userData?.username}`);
+    setTimeout(() => { 
+      navigate(`/profile/${userData?.username}`);
+      setLoading(false);
+    }, 500); 
   };
 
   return (
@@ -180,6 +184,12 @@ const Sidebar = () => {
       >
         <p>Are you sure you want to log out?</p>
       </Modal>
+
+      {loading && (
+        <div className="loading-overlay w-[80%] ">
+          <Spin size="large" />
+        </div>
+      )}
     </>
   );
 };

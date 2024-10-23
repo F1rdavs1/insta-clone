@@ -39,9 +39,8 @@ const People = () => {
         </h3>
       </div>
       <div className="flex flex-wrap gap-5 ">
-        {data.length > 0
-          ? data.map((user: any, ind: number) => (
-            <div
+        {data.map((user: any, ind: number) => (
+          <div
             key={ind}
             className="user-card flex flex-col items-center mb-4 py-[40px] border border-[#1F1F22] rounded-[20px] w-[303px]"
           >
@@ -74,9 +73,7 @@ const People = () => {
               </button>
             )}
           </div>
-          
-            ))
-          : ""}
+        ))}
       </div>
     </div>
   );
