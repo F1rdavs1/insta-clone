@@ -8,20 +8,21 @@ import { setToken, setUser } from "../../redux/slice/auth-slice";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
+import { message } from "antd";  // Ant Design'dan message import qilindi
 
 const Login = () => {
   const [loginUser] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const context = useContext(Context);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const formDataToJson = Object.fromEntries(formData);
 
-    setLoading(true); 
+    setLoading(true);
     try {
       const res = await loginUser(formDataToJson).unwrap();
       dispatch(setToken(res.accessToken));
@@ -31,9 +32,9 @@ const Login = () => {
       window.localStorage.setItem("userData", JSON.stringify(formDataToJson));
       navigate("/");
     } catch (error) {
-      console.log("Login failed:", error);
+      message.error("Login failed. Please try again."); // Xato xabari Ant Design orqali
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -87,12 +88,14 @@ const Login = () => {
 
           <button
             className={`w-full py-3 rounded-lg text-white font-semibold text-base leading-6 transition duration-200 ${
-              loading ? "bg-gray-500 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
+              loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-purple-600 hover:bg-purple-700"
             }`}
             type="submit"
-            disabled={loading} 
+            disabled={loading}
           >
-            {loading ? "Logging in..." : "Log In"} 
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
@@ -105,7 +108,10 @@ const Login = () => {
         </button>
         <p className="mt-4 text-gray-400 text-center">
           Don’t have an account?{" "}
-          <button onClick={handleSignUp} className="text-blue-500 hover:underline">
+          <button
+            onClick={handleSignUp}
+            className="text-blue-500 hover:underline"
+          >
             Sign up
           </button>
         </p>

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import googleIcon from "../../assets/images/google-icon.svg";
 import { FormEvent, useState } from "react";
 import { useRegisterMutation } from "../../redux/api/user-slice";
+import { message } from "antd";
 import type { Register as RegisterType } from "../../types";
 
 const Register = () => {
   const navigate = useNavigate();
   const [createUser] = useRegisterMutation();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false); 
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -30,10 +30,10 @@ const Register = () => {
 
     try {
       const response = await createUser(data).unwrap();
-      console.log("Registration successful:", response);
+      message.success("Registration successful!", response);
       navigate("/login");
     } catch (error) {
-      setErrorMessage("Registration failed. Please try again.");
+      message.error("Registration failed. Please try again.");
       console.error("Registration error:", error);
     } finally {
       setLoading(false);
@@ -50,10 +50,11 @@ const Register = () => {
           <p className="text-gray-400 mt-3 mb-6 text-center">
             To use Snapgram, please enter your details.
           </p>
-          {errorMessage && (
-            <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
-          )}
-          <form autoComplete="off" onSubmit={handleSubmit} className="space-y-4">
+          <form
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            className="space-y-4"
+          >
             <label>
               <h2 className="font-medium text-lg leading-6 text-white mb-2">
                 Name
@@ -104,9 +105,9 @@ const Register = () => {
             <button
               className="w-full py-2 bg-purple-600 rounded-md text-white font-semibold hover:bg-purple-700 transition duration-200"
               type="submit"
-              disabled={loading} 
+              disabled={loading}
             >
-              {loading ? "Signing Up..." : "Sign Up"} 
+              {loading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
           <div className="mt-6">
