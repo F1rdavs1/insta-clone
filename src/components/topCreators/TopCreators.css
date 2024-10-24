@@ -1,0 +1,41 @@
+/* Default styles
+.container {
+    width: 100%;
+    padding: 16px;
+  } */
+
+/* Katta ekranlar uchun */
+@media (max-width: 1516px) {
+  .topcreator-wrapper {
+    width: 100px;
+    margin-bottom: 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
+@media (max-width: 1516px) {
+  .topcreator-img {
+    width: 30px;
+    height: 30px;
+  }
+}
+@media (max-width: 1516px) {
+  .topcreator-username {
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 1516px) {
+  .topcreator-btn {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+}
+
+@media (max-width: 1149px) {
+  .topcreator-wrapper {
+    display: none;
+  }
+}

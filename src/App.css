@@ -5,7 +5,9 @@
 .active {
   background-color: #877eff;
 }
-
+.activ.active {
+  background-color: #101012;
+}
 ::-webkit-scrollbar {
   background: gray;
   height: 5px;
@@ -36,3 +38,6 @@
 }
 
 
+.profile-scroll::-webkit-scrollbar{
+  display: none;
+}

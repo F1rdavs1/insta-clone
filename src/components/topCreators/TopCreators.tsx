@@ -7,6 +7,7 @@ import {
 import Avatar from "../../assets/images/user.png";
 import { useState } from "react";
 import { Link } from "react-router-dom"; 
+// import "./TopCreators.css"
 
 const TopCreators = () => {
   const { data = [] } = useGetAllUsersQuery(true);
@@ -40,18 +41,18 @@ const TopCreators = () => {
           ? data.slice(0, 8).map((user: any, ind: number) => (
               <div
                 key={ind}
-                className="user-card flex flex-col text-center items-center mb-4 py-[24px] px-[4px] border border-[#1F1F22] rounded-[20px] w-[150px]"
+                className="topcreator-wrapper flex flex-col text-center items-center mb-4 py-[24px] px-[4px] border border-[#1F1F22] rounded-[20px] w-[150px]"
               >
                 <Link to={`/profile/${user.username}`}>
                   <img
                     src={user?.photo || Avatar}
                     alt="Avatar"
-                    className="w-[54px] h-[54px] rounded-full mr-4 text-white cursor-pointer"
+                    className="topcreator-img w-[54px] h-[54px] rounded-full mr-4 text-white cursor-pointer"
                   />
                 </Link>
                 <div>
                   <Link to={`/profile/${user.username}`}>
-                    <p className="text-white font-semibold cursor-pointer">
+                    <p className="topcreator-username text-white font-semibold text-center cursor-pointer">
                       {user.username}
                     </p>
                   </Link>
@@ -59,7 +60,7 @@ const TopCreators = () => {
                     (item: any) => item.username === user.username
                   ) ? (
                     <button
-                      className="text-white mt-[12px] bg-red-500 px-[18px] py-[6px] rounded-[8px] flex items-center"
+                      className="topcreator-btn text-white mt-[12px] bg-red-500 px-[18px] py-[6px] rounded-[8px] flex items-center"
                       onClick={() => handleUnfollow(user.username)}
                       disabled={loading[user.username]}
                     >
@@ -67,7 +68,7 @@ const TopCreators = () => {
                     </button>
                   ) : (
                     <button
-                      className="text-white mt-[12px] bg-[rgba(135,126,255,1)] px-[18px] py-[6px] rounded-[8px] follow-button flex items-center"
+                      className="topcreator-btn text-white mt-[12px] bg-[rgba(135,126,255,1)] px-[18px] py-[6px] rounded-[8px] follow-button flex items-center"
                       onClick={() => handleFollow(user.username)}
                       disabled={loading[user.username]}
                     >

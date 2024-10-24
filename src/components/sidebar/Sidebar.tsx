@@ -13,6 +13,7 @@ import NavbarLogOut from "../../assets/images/Logout.svg";
 import NavbarSettings from "../../assets/images/Settings.svg";
 import { Modal, Spin } from "antd";
 import { useState } from "react";
+import "./Sidebar.css"
 
 const Sidebar = () => {
   const userData = JSON.parse(localStorage.getItem("userData") || "{}");
@@ -37,39 +38,41 @@ const Sidebar = () => {
   };
 
   const handleProfileClick = () => {
-    setTimeout(() => { 
+    setTimeout(() => {
       navigate(`/my-profile/${userData?.username}`);
       setLoading(false);
-    }, 500); 
+    }, 500);
   };
 
   return (
     <>
-      <div className="bg-[#09090A] h-[100vh] overflow-y-auto sidebar py-[20px] w-[20%]">
-        <div className="flex items-center gap-[8px] pl-[16px]">
-          <img src={SnapGramIcon} alt="Snapgram" />
-          <h2 className="font-bold text-[28px] leading-[36px] text-white">
-            Snapgram
-          </h2>
-        </div>
-        <div
-          className="flex items-center gap-[5px] py-[20px] pl-[16px] cursor-pointer my-profile"
-          onClick={handleProfileClick}
-        >
-          <img
-            className="w-[56px] h-[56px] rounded-[50%]"
-            src={Avatar}
-            alt="Avatar"
-            width={56}
-            height={56}
-          />
-          <div className="">
-            <h3 className="text-white font-bold text-[24px] pt-[20px]">
-              {data?.fullName || userData?.username}
-            </h3>
-            <h3 className="text-slate-400 font-bold text-[16px]">
-              @{data?.username || userData?.username}
-            </h3>
+      <div className="sidebar-wrap bg-[#09090A] h-[100vh] overflow-y-auto sidebar py-[20px] w-[20%]">
+        <div>
+          <div className="sidebar-logo flex items-center gap-[8px] pl-[16px]">
+            <img src={SnapGramIcon} alt="Snapgram" />
+            <h2 className="font-bold text-[28px] leading-[36px] text-white">
+              Snapgram
+            </h2>
+          </div>
+          <div
+            className="flex items-center gap-[5px] py-[20px] pl-[16px] cursor-pointer my-profile"
+            onClick={handleProfileClick}
+          >
+            <img
+              className="w-[56px] h-[56px] rounded-[50%]"
+              src={Avatar}
+              alt="Avatar"
+              width={56}
+              height={56}
+            />
+            <div className="">
+              <h3 className="text-white font-bold text-[24px] pt-[20px]">
+                {data?.fullName || userData?.username}
+              </h3>
+              <h3 className="text-slate-400 font-bold text-[16px]">
+                @{data?.username || userData?.username}
+              </h3>
+            </div>
           </div>
         </div>
         <div className="space-y-[10px] mx-[20px]">

@@ -45,6 +45,12 @@ export const userApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: "User" }],
     }),
+    getFollowUsers: build.query({
+      query: (username) => ({
+        url: `/api/user/profile/${username}`,
+      }),
+      providesTags: [{ type: "User" }],
+    }),
   }),
 });
 
@@ -55,4 +61,5 @@ export const {
   useGetUserQuery,
   useFollowMutation,
   useUnfollowMutation,
+  useGetFollowUsersQuery,
 } = userApi;
