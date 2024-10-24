@@ -38,7 +38,7 @@ const Sidebar = () => {
 
   const handleProfileClick = () => {
     setTimeout(() => { 
-      navigate(`/profile/${userData?.username}`);
+      navigate(`/my-profile/${userData?.username}`);
       setLoading(false);
     }, 500); 
   };

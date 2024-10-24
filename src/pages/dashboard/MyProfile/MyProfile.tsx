@@ -1,38 +1,12 @@
 import { useParams } from "react-router-dom";
-import {
-  useGetUserQuery,
-  useFollowMutation,
-  useUnfollowMutation,
-} from "../../redux/api/user-slice";
-import Avatar from "../../assets/images/user.png";
-import { useState } from "react";
+import { useGetUserQuery } from "../../../redux/api/user-slice";
+import Avatar from "../../../assets/images/user.png";
+import EditIcon from "../../../assets/images/edit-icon.svg";
 
 const ProfileDetail = () => {
   const { username } = useParams();
+
   const { data: user, isLoading } = useGetUserQuery(username);
-  const currentUser = JSON.parse(localStorage.getItem("userData") || "{}");
-  const currentUsername = currentUser?.username || "";
-
-  const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
-
-  const handleFollow = async (username: string): Promise<void> => {
-    setLoading((prev) => ({ ...prev, [username]: true }));
-    await follow(username);
-    setLoading((prev) => ({ ...prev, [username]: false }));
-  };
-
-  const handleUnfollow = async (username: string): Promise<void> => {
-    setLoading((prev) => ({ ...prev, [username]: true }));
-    await unfollow(username);
-    setLoading((prev) => ({ ...prev, [username]: false }));
-  };
-
-  const [follow] = useFollowMutation();
-  const [unfollow] = useUnfollowMutation();
-
-  const isFollowing = user?.followers?.some(
-    (follower: any) => follower.username === currentUsername
-  );
 
   return (
     <div
@@ -59,24 +33,9 @@ const ProfileDetail = () => {
                 <h1 className="font-semibold text-[36px] leading-[50.4px] text-white">
                   {user.fullName}
                 </h1>
-                <div className="flex items-center gap-[7px]  bg-[#101012] rounded-[8px]">
-                  {isFollowing ? (
-                    <button
-                    onClick={() => handleUnfollow(user.username)}
-                      className="text-white bg-red-500 px-[18px] py-[6px] rounded-[8px]"
-                      disabled={loading[user.username]}
-                    >
-                      {loading[user.username] ? "Unfollowing..." : "Unfollow"}
-                    </button>
-                  ) : (
-                    <button
-                    onClick={() => handleFollow(user.username)}
-                      className="text-white bg-[#877EFF] px-[18px] py-[6px] rounded-[8px]"
-                      disabled={loading[user.username]}
-                    >
-                      {loading[user.username] ? "Following..." : "Follow"}
-                    </button>
-                  )}
+                <div className="flex items-center gap-[7px] py-[10px] bg-[#101012] rounded-[8px] px-[20px]">
+                  <img src={EditIcon} alt="Edit" />
+                  <span className="text-white">Edit Profile</span>
                 </div>
               </div>
               <p className="text-[#7878A3] font-normal text-[18px] leading-[25.2px]">

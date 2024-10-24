@@ -7,6 +7,7 @@ import {
 import Avatar from "../../assets/images/user.png";
 import PeopeAvatar from "../../assets/images/People.svg";
 import { useState } from "react";
+import { Link } from "react-router-dom"; 
 
 const People = () => {
   const { data = [] } = useGetAllUsersQuery(true);
@@ -44,14 +45,22 @@ const People = () => {
             key={ind}
             className="user-card flex flex-col items-center mb-4 py-[40px] border border-[#1F1F22] rounded-[20px] w-[303px]"
           >
-            <img
-              src={user?.photo || Avatar}
-              alt="Avatar"
-              className="w-[54px] h-[54px] rounded-full"
-            />
+            <Link to={`/profile/${user.username}`}>
+              <img
+                src={user?.photo || Avatar}
+                alt="Avatar"
+                className="w-[54px] h-[54px] rounded-full cursor-pointer"
+              />
+            </Link>
             <div className="text-center mt-[24px] mb-[20px]">
-              <p className="text-white font-bold text-[24px] leading-[33.6px]  pb-[8px]">{user.username}</p>
-              <p className="text-[#7878A3] font-medium text-[18px] leading-[25px] ">{user.email}</p>
+              <Link to={`/profile/${user.username}`}>
+                <p className="text-white font-bold text-[24px] leading-[33.6px] pb-[8px] cursor-pointer">
+                  {user.username}
+                </p>
+              </Link>
+              <p className="text-[#7878A3] font-medium text-[18px] leading-[25px]">
+                {user.email}
+              </p>
             </div>
             {followUserData.data?.following?.some(
               (item: any) => item.username === user.username
