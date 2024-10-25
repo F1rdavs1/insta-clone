@@ -8,7 +8,7 @@ import Reels from "../../../assets/images/reels-icon.svg";
 import Taged from "../../../assets/images/Tag.svg";
 import SortIcon from "../../../assets/images/Sort.svg";
 import { useGetAllUserPostsQuery } from "../../../redux/api/create-api";
-import "../../../App.css"
+import "../../../App.css";
 
 const ProfileDetail = () => {
   const { username } = useParams();
@@ -118,7 +118,7 @@ const ProfileDetail = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-start gap-[20px]">
+          <div className="grid grid-cols-3 gap-[20px]">
             {posts?.map((post: any, ind: number) => (
               <div key={ind} className="shadow-lg">
                 {post?.content[0]?.type == "IMAGE" ? (

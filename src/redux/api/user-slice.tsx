@@ -51,6 +51,21 @@ export const userApi = api.injectEndpoints({
       }),
       providesTags: [{ type: "User" }],
     }),
+    likePost: build.mutation({
+      query: (postID) => ({
+        url: `/api/post/${postID}/like`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "User" }],
+    }),
+    postComment: build.mutation({
+      query: (data) => ({
+        url: `/api/comment/${data.postId}`,
+        method: "POST",
+        body: data.body,
+      }),
+      invalidatesTags: [{ type: "User" }],
+    }),
   }),
 });
 
@@ -62,4 +77,6 @@ export const {
   useFollowMutation,
   useUnfollowMutation,
   useGetFollowUsersQuery,
+  useLikePostMutation,
+  usePostCommentMutation,
 } = userApi;

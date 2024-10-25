@@ -5,9 +5,9 @@ import {
   useGetUserQuery,
 } from "../../redux/api/user-slice";
 import Avatar from "../../assets/images/user.png";
-import PeopeAvatar from "../../assets/images/People.svg";
+import PeopleAvatar from "../../assets/images/People.svg";
 import { useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 
 const People = () => {
   const { data = [] } = useGetAllUsersQuery(true);
@@ -18,6 +18,7 @@ const People = () => {
   const followUserData = useGetUserQuery(username);
 
   const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
+  const [visibleUsers, setVisibleUsers] = useState(10); 
 
   const handleFollow = async (username: string): Promise<void> => {
     setLoading((prev) => ({ ...prev, [username]: true }));
@@ -31,16 +32,24 @@ const People = () => {
     setLoading((prev) => ({ ...prev, [username]: false }));
   };
 
+  const handleSeeMore = () => {
+    setVisibleUsers((prev) => prev + 10); 
+  };
+
+  const handleSeeLess = () => {
+    setVisibleUsers(10); 
+  };
+
   return (
-    <div className="h-[100vh] overflow-y-auto w-[80%] bg-[#000000] px-[60px] pt-[80px]">
+    <div className="h-[100vh] overflow-y-auto w-[80%] bg-[#000000] px-[60px] pt-[80px] relative">
       <div className="flex items-center gap-[10px] mb-[40px]">
-        <img src={PeopeAvatar} alt="People" width={36} height={36} />
+        <img src={PeopleAvatar} alt="People" width={36} height={36} />
         <h3 className="font-bold text-[24px] leading-[33.6px] text-white">
           All Users
         </h3>
       </div>
       <div className="flex flex-wrap gap-5 ">
-        {data.map((user: any, ind: number) => (
+        {data.slice(0, visibleUsers).map((user: any, ind: number) => (
           <div
             key={ind}
             className="user-card flex flex-col items-center mb-4 py-[40px] border border-[#1F1F22] rounded-[20px] w-[303px]"
@@ -83,6 +92,25 @@ const People = () => {
             )}
           </div>
         ))}
+      </div>
+
+      <div className="absolute right-52 pb-[40px]">
+        {visibleUsers < data.length && (
+          <button
+            className="text-white mt-4 mr-[5px] bg-[green] px-4 py-2 rounded-lg"
+            onClick={handleSeeMore}
+          >
+            See More
+          </button>
+        )}
+        {visibleUsers > 10 && (
+          <button
+            className="text-white mt-2 bg-[red] px-4 py-2 rounded-lg"
+            onClick={handleSeeLess}
+          >
+            See Less
+          </button>
+        )}
       </div>
     </div>
   );
