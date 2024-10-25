@@ -70,7 +70,7 @@ const Sidebar = () => {
                 {data?.fullName || userData?.username}
               </h3>
               <h3 className="text-slate-400 font-bold text-[16px]">
-                @{data?.username || userData?.username}
+                @{data?.username}
               </h3>
             </div>
           </div>

@@ -10,7 +10,7 @@ import SortIcon from "../../../assets/images/Sort.svg";
 import { useGetAllUserPostsQuery } from "../../../redux/api/create-api";
 import "../../../App.css";
 
-const ProfileDetail = () => {
+const MyProfile = () => {
   const { username } = useParams();
 
   const { data: user, isLoading } = useGetUserQuery(username);
@@ -18,11 +18,10 @@ const ProfileDetail = () => {
     ? JSON.parse(window.localStorage.getItem("userData") as string).username
     : null;
   const { data: posts } = useGetAllUserPostsQuery(currentUsernamee);
+  console.log(user);
   return (
     <div
-      className={`profile-detail ${
-        isLoading ? "bg-white" : "bg-[#000000]"
-      } w-[80%] px-[60px]`}
+      className={`profile-detail ${isLoading ? "bg-white" : "bg-[#000000]"} w-[80%] px-[60px]`}
     >
       {isLoading ? (
         <p>Loading...</p>
@@ -43,10 +42,13 @@ const ProfileDetail = () => {
                 <h1 className="font-semibold text-[36px] leading-[50.4px] text-white">
                   {user.fullName}
                 </h1>
-                <div className="flex items-center gap-[7px] py-[10px] bg-[#101012] rounded-[8px] px-[20px]">
+                <NavLink
+                  to={`/my-profile/${user.username}/edit`} 
+                  className="flex items-center gap-[7px] py-[10px] bg-[#101012] rounded-[8px] px-[20px]"
+                >
                   <img src={EditIcon} alt="Edit" />
                   <span className="text-white">Edit Profile</span>
-                </div>
+                </NavLink>
               </div>
               <p className="text-[#7878A3] font-normal text-[18px] leading-[25.2px] mb-[18px]">
                 @{user.username}
@@ -79,8 +81,7 @@ const ProfileDetail = () => {
               </div>
               <div className="text-white">
                 <h3>🌿 Capturing the essence of nature through my lens</h3>✨
-                "In every walk with nature, one receives far more than he
-                seeks." - John Muir
+                "In every walk with nature, one receives far more than he seeks." - John Muir
               </div>
               <Stories />
             </div>
@@ -96,7 +97,7 @@ const ProfileDetail = () => {
               </NavLink>
               <NavLink
                 to={`/my-profile/${user.username}/reels`}
-                className="bg-[#09090A] text-white flex items-center gap-[10px] px-[50px] py-[13px] activ "
+                className="bg-[#09090A] text-white flex items-center gap-[10px] px-[50px] py-[13px] activ"
               >
                 <img src={Reels} alt="Reels" />
                 <span>Reels</span>
@@ -121,7 +122,7 @@ const ProfileDetail = () => {
           <div className="grid grid-cols-3 gap-[20px]">
             {posts?.map((post: any, ind: number) => (
               <div key={ind} className="shadow-lg">
-                {post?.content[0]?.type == "IMAGE" ? (
+                {post?.content[0]?.type === "IMAGE" ? (
                   <img
                     src={post?.content[0]?.url}
                     alt={post?.content_alt || "Post image"}
@@ -141,4 +142,4 @@ const ProfileDetail = () => {
   );
 };
 
-export default ProfileDetail;
+export default MyProfile;

@@ -1,0 +1,115 @@
+import { EditWhiteIcon } from "../../../assets/images";
+import {
+  useGetUserDatasQuery,
+  useUpdateUserDataMutation,
+} from "../../../redux/api/user-slice";
+import { FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import Avatar from "../../../assets/images/user.png";
+
+function EditProfile() {
+  const { data: currentUserData } = useGetUserDatasQuery(true);
+  const [updateUserDetails, { isLoading: isUserUpdating }] =
+    useUpdateUserDataMutation();
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      await updateUserDetails({
+        full_name: formData.get("full_name")?.toString(),
+        username: formData.get("username")?.toString(),
+        email: formData.get("email")?.toString(),
+        bio: formData.get("bio")?.toString(),
+      }).unwrap();
+
+      navigate(`/`);
+      window.location.reload();
+    } catch (err) {
+      console.error("Update failed:", err);
+    }
+    console.log(currentUserData.username);
+  };
+  return (
+    <div className="w-[80%] bg-black text-white overflow-y-auto h-[100vh] px-[60px] py-[20px]">
+      {currentUserData && (
+        <div>
+          <div className="flex items-center gap-[10px] mb-[20px]">
+            <div className="scale-150">
+              <EditWhiteIcon />
+            </div>
+            <h2 className="font-bold text-[36px] leading-[50px]">
+              Edit Profile
+            </h2>
+          </div>
+          <form
+            autoComplete="off"
+            onSubmit={handleFormSubmit}
+            className="flex flex-col gap-3"
+          >
+            <div className="flex items-center gap-[14px]">
+              <img
+                className="w-[100px] h-[100px] object-cover rounded-[50%] "
+                src={currentUserData.photo || Avatar}
+                alt="Profile"
+              />
+              <span className="font-semibold text-[18px] leading-[25px] text-[#0095F6]">
+                Change profile photo
+              </span>
+            </div>
+
+            <label className="flex flex-col gap-1 w-full">
+              <span className="text-lg font-medium">Name</span>
+              <input
+                type="text"
+                name="full_name"
+                defaultValue={currentUserData.fullName}
+                className="w-full bg-[#101012] rounded-[10px] outline-none py-4 px-5 font-semibold bg-dark-300 text-white "
+              />
+            </label>
+
+            <label className="flex flex-col gap-1 w-full">
+              <span className="text-lg font-medium">Username</span>
+              <div className="flex items-center bg-dark-300">
+                <input
+                  type="text"
+                  name="user_name"
+                  defaultValue={currentUserData.username}
+                  className="w-full bg-[#101012] rounded-[10px] outline-none py-4 px-5 font-semibold text-white"
+                />
+              </div>
+            </label>
+
+            <label className="flex flex-col gap-3 w-full">
+              <span className="text-lg font-medium">Email</span>
+              <input
+                type="email"
+                name="email"
+                defaultValue={currentUserData.email}
+                className="w-full bg-[#101012] rounded-[10px] outline-none py-4 px-5 font-semibold bg-dark-300 text-white "
+              />
+            </label>
+
+            <label className="flex flex-col gap-3 w-full">
+              <span className="text-lg font-medium">Bio</span>
+              <textarea
+                name="bio"
+                defaultValue={currentUserData.bio}
+                rows={3}
+                className="w-full bg-[#101012] rounded-[10px] outline-none py-1.5 px-5 font-semibold bg-dark-300 text-white  resize-none"
+              ></textarea>
+            </label>
+
+            <button className="ml-auto py-3 mt-5 rounded-lg px-5 bg-[#877EFF] font-semibold">
+              {isUserUpdating ? "Updating..." : "Update Profile"}
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default EditProfile;

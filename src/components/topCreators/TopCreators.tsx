@@ -7,7 +7,6 @@ import {
 import Avatar from "../../assets/images/user.png";
 import { useState } from "react";
 import { Link } from "react-router-dom"; 
-// import "./TopCreators.css"
 
 const TopCreators = () => {
   const { data = [] } = useGetAllUsersQuery(true);
@@ -29,6 +28,13 @@ const TopCreators = () => {
     setLoading((prev) => ({ ...prev, [username]: true }));
     await unfollow(username);
     setLoading((prev) => ({ ...prev, [username]: false }));
+  };
+
+  const formatUsername = (username: string) => {
+    if (username.length > 7) {
+      return username.slice(0, 3) + "..." + username.slice(-4);
+    }
+    return username;
   };
 
   return (
@@ -53,7 +59,7 @@ const TopCreators = () => {
                 <div>
                   <Link to={`/profile/${user.username}`}>
                     <p className="topcreator-username text-white font-semibold text-center cursor-pointer">
-                      {user.username}
+                      {formatUsername(user.username)}
                     </p>
                   </Link>
                   {followUserData.data?.following?.some(

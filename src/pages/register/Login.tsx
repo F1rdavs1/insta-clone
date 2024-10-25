@@ -64,7 +64,6 @@ const Login = () => {
               <input
                 type="text"
                 className="w-[400px] px-4 py-3 text-sm bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
-                placeholder="Enter your username"
                 name="username"
                 required
               />
@@ -79,7 +78,6 @@ const Login = () => {
               <input
                 type="password"
                 className="w-full px-4 py-3 text-sm bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
-                placeholder="Enter your password"
                 name="password"
                 required
               />

@@ -117,14 +117,18 @@ const Home: React.FC = () => {
                   <div className="space-y-[20px] mb-[30px]">
                     <div className="flex items-center">
                       <img
-                        className="w-[50px] h-[50px] rounded-full"
+                        className="w-[50px] h-[50px] cursor-pointer rounded-[50%]"
                         src={post?.owner?.photo || Avatar}
                         alt="Profile Image"
-                        width={50}
-                        height={50}
+                        onClick={() => handleProfileClick(post.owner.username)}
                       />
                       <div className="ml-4">
-                        <h3 className="text-white font-semibold text-[18px] leading-[25px] ">
+                        <h3
+                          className="text-white font-semibold text-[18px] leading-[25px] cursor-pointer"
+                          onClick={() =>
+                            handleProfileClick(post.owner.username)
+                          }
+                        >
                           {post.owner.username}
                         </h3>
                         <strong className="font-bold text-[14px] leading-[19.6px] text-[#7878A3]">
@@ -234,7 +238,7 @@ const Home: React.FC = () => {
                         <img
                           className="size-[20px]"
                           src={TelegramIcon}
-                          alt="Telegram"
+                          alt="Send"
                           width={20}
                           height={20}
                         />
@@ -247,6 +251,7 @@ const Home: React.FC = () => {
           })}
         </div>
       </div>
+
       <div className="w-full lg:w-[30%] overflow-y-auto h-[100vh] bg-[#09090A] border-l px-[20px] md:px-[24px]">
         <TopCreators />
       </div>
