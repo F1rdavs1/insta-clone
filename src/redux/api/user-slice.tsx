@@ -20,7 +20,7 @@ export const userApi = api.injectEndpoints({
     }),
     getAllUsers: build.query({
       query: () => ({
-        url: "/api/user/all?limit=300",
+        url: "/api/user/all?limit=500",
         method: "GET",
       }),
       providesTags: ["User"],
@@ -38,7 +38,7 @@ export const userApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: "User" }],
     }),
-    unfollow: build.mutation({
+    getUnfollowUsers: build.mutation({
       query: (username) => ({
         url: `/api/user/unfollow/${username}`,
         method: "POST",
@@ -66,19 +66,19 @@ export const userApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: "User" }],
     }),
-    getUserDatas: build.query({
+    getUserProfile: build.query({
       query:() => ({
         url: '/api/user/profile',
       })
     }),
-    updateUserData: build.mutation({
+    updateProfile: build.mutation({
       query:(body) => ({
         url:'/api/user/profile',
         method: "PUT",
         body
       }),
     }),
-    getAllCommentByPostId: build.query({
+    getCommentsForPost: build.query({
       query: (postID) => ({
         url:`/api/comment/post/${postID}`
       }),
@@ -93,12 +93,12 @@ export const {
   useGetAllUsersQuery,
   useGetUserQuery,
   useFollowMutation,
-  useUnfollowMutation,
+  useGetUnfollowUsersMutation,
   useGetFollowUsersQuery,
   useLikePostMutation,
   usePostCommentMutation,
-  useUpdateUserDataMutation,
-  useGetAllCommentByPostIdQuery,
-  useGetUserDatasQuery
+  useUpdateProfileMutation,
+  useGetCommentsForPostQuery,
+  useGetUserProfileQuery
 
 } = userApi;

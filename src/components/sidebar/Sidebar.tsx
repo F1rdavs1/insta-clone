@@ -15,7 +15,7 @@ import { Modal, Spin } from "antd";
 import { useState } from "react";
 import "./Sidebar.css"
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
   const userData = JSON.parse(localStorage.getItem("userData") || "{}");
   const username = userData?.username || "";
   const { data } = useGetUserQuery(username);

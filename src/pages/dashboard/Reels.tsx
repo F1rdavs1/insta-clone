@@ -1,6 +1,6 @@
 import NotFound from "../../components/NotFound/NotFound.jsx";
 
-const Reels = () => {
+const Reels: React.FC = () => {
   return <NotFound/>;
 };
 

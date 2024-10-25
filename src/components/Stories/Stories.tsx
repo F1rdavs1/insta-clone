@@ -5,7 +5,7 @@ import StoryLogo4 from "../../assets/images/profile-detail-logo4.svg";
 import StoryLogo5 from "../../assets/images/profile-detail-logo5.svg";
 import StoryLogo6 from "../../assets/images/profile-detail-logo6.svg";
 
-const Stories = () => {
+const Stories: React.FC = () => {
   return (
     <ul className="flex items-center gap-[30px] mt-[32px] mb-[69px]">
     <li className="flex flex-col gap-[6px] text-center cursor-pointer">

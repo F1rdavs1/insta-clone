@@ -1,5 +1,5 @@
 
-const Posts = () => {
+const Posts: React.FC = () => {
   return <div className="text-[red]">Posts</div>;
 };
 

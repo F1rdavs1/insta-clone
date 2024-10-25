@@ -2,7 +2,7 @@ import { NavLink, useParams } from "react-router-dom";
 import {
   useGetUserQuery,
   useFollowMutation,
-  useUnfollowMutation,
+  useGetUnfollowUsersMutation,
 } from "../../redux/api/user-slice";
 import Avatar from "../../assets/images/user.png";
 import { useState } from "react";
@@ -13,11 +13,11 @@ import Taged from "../../assets/images/Tag.svg";
 import SortIcon from "../../assets/images/Sort.svg";
 import Stories from "../../components/Stories/Stories";
 
-const ProfileDetail = () => {
+const ProfileDetail: React.FC = () => {
   const { username } = useParams();
   const { data: user, isLoading } = useGetUserQuery(username);
-  const currentUser = JSON.parse(localStorage.getItem("userData") || "{}");
-  const currentUsername = currentUser?.username || "";
+  const sessionUser = JSON.parse(localStorage.getItem("userData") || "{}");
+  const sessionUsername = sessionUser?.username || "";
 
   const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
 
@@ -34,10 +34,10 @@ const ProfileDetail = () => {
   };
 
   const [follow] = useFollowMutation();
-  const [unfollow] = useUnfollowMutation();
+  const [unfollow] = useGetUnfollowUsersMutation();
 
   const isFollowing = user?.followers?.some(
-    (follower: any) => follower.username === currentUsername
+    (follower: any) => follower.username === sessionUsername
   );
 
   return (

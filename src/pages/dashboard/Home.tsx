@@ -19,43 +19,42 @@ import { Follower, Post, PostContent } from "../../types";
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const storedUserData = window.localStorage.getItem("userData");
-  const currentUserData = storedUserData ? JSON.parse(storedUserData) : null;
+  const sessionUserData = storedUserData ? JSON.parse(storedUserData) : null;
+  const sessionUserName = sessionUserData?.username || null;
 
-  const currentusername = currentUserData?.username || null;
-
-  const [likePost, { isLoading }] = useLikePostMutation();
-  const { data: feed, refetch } = useGetPostsQuery(true);
-  const { data: followUsersData } = useGetFollowUsersQuery(currentusername);
-  const [likedPosts, setLikedPosts] = useState<Record<number, boolean>>({});
+  const [likePost, { isLoading: isLikingPost }] = useLikePostMutation();
+  const { data: feedPosts, refetch: refetchFeed } = useGetPostsQuery(true);
+  const { data: followingUsersData } = useGetFollowUsersQuery(sessionUserName);
+  const [likedPostsState, setLikedPostsState] = useState<
+    Record<number, boolean>
+  >({});
 
   useEffect(() => {
     const storedLikes = localStorage.getItem("likedPosts");
     if (storedLikes) {
-      setLikedPosts(JSON.parse(storedLikes));
+      setLikedPostsState(JSON.parse(storedLikes));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
-  }, [likedPosts]);
+    localStorage.setItem("likedPosts", JSON.stringify(likedPostsState));
+  }, [likedPostsState]);
 
-  const handleProfileClick = (username: string) => {
+  const handleProfileNavigation = (username: string) => {
     navigate(`/profile/${username}`);
   };
 
-  const toggleLike = async (postId: number) => {
+  const handleLikeToggle = async (postId: number) => {
     try {
       await likePost(postId).unwrap();
-
-      setLikedPosts((prev) => {
-        const isLiked = prev[postId] || false;
+      setLikedPostsState((prevLikes) => {
+        const wasLiked = prevLikes[postId] || false;
         return {
-          ...prev,
-          [postId]: !isLiked,
+          ...prevLikes,
+          [postId]: !wasLiked,
         };
       });
-
-      refetch();
+      refetchFeed();
     } catch (error) {
       console.error("Like action failed:", error);
     }
@@ -65,12 +64,12 @@ const Home: React.FC = () => {
     <div className="flex flex-col lg:flex-row w-full lg:w-[80%] mx-auto">
       <div className="flex-1 bg-[#000000] overflow-y-auto h-[100vh] pt-[60px]">
         <div className="flex items-center gap-[17px] w-[90vh] overflow-x-auto mx-auto stories">
-          {followUsersData?.following?.map(
-            (follower: Follower, ind: number) => (
+          {followingUsersData?.following?.map(
+            (follower: Follower, index: number) => (
               <div
-                key={ind}
+                key={index}
                 className="flex flex-col items-center w-[80px] h-[72px] pl-[5px] cursor-pointer"
-                onClick={() => handleProfileClick(follower.username)}
+                onClick={() => handleProfileNavigation(follower.username)}
               >
                 <img
                   className="w-[45px] h-[45px] border-[3px] border-[#3728FF] rounded-[50%]"
@@ -105,8 +104,8 @@ const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-10 px-[20px] md:px-[40px]">
-          {feed?.posts?.map((post: Post) => {
-            const isLiked = likedPosts[post._id];
+          {feedPosts?.posts?.map((post: Post) => {
+            const isPostLiked = likedPostsState[post._id];
 
             return (
               <div
@@ -120,13 +119,15 @@ const Home: React.FC = () => {
                         className="w-[50px] h-[50px] cursor-pointer rounded-[50%]"
                         src={post?.owner?.photo || Avatar}
                         alt="Profile Image"
-                        onClick={() => handleProfileClick(post.owner.username)}
+                        onClick={() =>
+                          handleProfileNavigation(post.owner.username)
+                        }
                       />
                       <div className="ml-4">
                         <h3
                           className="text-white font-semibold text-[18px] leading-[25px] cursor-pointer"
                           onClick={() =>
-                            handleProfileClick(post.owner.username)
+                            handleProfileNavigation(post.owner.username)
                           }
                         >
                           {post.owner.username}
@@ -145,12 +146,12 @@ const Home: React.FC = () => {
                     </h3>
                   </div>
 
-                  {post?.content?.map((item: PostContent, i: number) => {
+                  {post?.content?.map((item: PostContent, index: number) => {
                     switch (item.type) {
                       case "IMAGE":
                         return (
                           <img
-                            key={i}
+                            key={index}
                             src={item.url}
                             alt="Post Image"
                             className="w-full rounded-[30px] h-[auto] object-cover"
@@ -159,7 +160,7 @@ const Home: React.FC = () => {
                       case "VIDEO":
                         return (
                           <video
-                            key={i}
+                            key={index}
                             className="w-full rounded-[30px] h-[auto]"
                             controls
                           >
@@ -175,11 +176,11 @@ const Home: React.FC = () => {
                     <div className="flex items-center gap-[30px]">
                       <ul
                         className="text-white flex items-center gap-[6px] cursor-pointer"
-                        onClick={() => toggleLike(post._id)}
+                        onClick={() => handleLikeToggle(post._id)}
                       >
-                        {isLoading ? (
+                        {isLikingPost ? (
                           <div className="loader">Load..</div>
-                        ) : isLiked ? (
+                        ) : isPostLiked ? (
                           <LikedIcon />
                         ) : (
                           <LikeIcon />
@@ -232,15 +233,14 @@ const Home: React.FC = () => {
                         name="comment"
                         type="text"
                         placeholder="Write your comment..."
-                        className="w-full outline-none pl-[16px] rounded-[8px] py-[11px] placeholder:text-[#5C5C7B] bg-[#101012] text-white"
+                        className="w-full outline-none pl-[16px] rounded-[8px] py-[11px] placeholder:text-[#5C5C7B] bg-[#1F1F22] text-white"
                       />
-                      <button className="absolute right-8 top-6" type="submit">
+                      <button className="absolute right-0">
                         <img
-                          className="size-[20px]"
                           src={TelegramIcon}
                           alt="Send"
-                          width={20}
-                          height={20}
+                          width={30}
+                          height={30}
                         />
                       </button>
                     </div>
@@ -251,7 +251,6 @@ const Home: React.FC = () => {
           })}
         </div>
       </div>
-
       <div className="w-full lg:w-[30%] overflow-y-auto h-[100vh] bg-[#09090A] border-l px-[20px] md:px-[24px]">
         <TopCreators />
       </div>

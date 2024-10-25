@@ -3,25 +3,30 @@ import { useGetUserQuery } from "../../../redux/api/user-slice";
 import Avatar from "../../../assets/images/user.png";
 import EditIcon from "../../../assets/images/edit-icon.svg";
 import Stories from "../../../components/Stories/Stories";
-import Galery from "../../../assets/images/Gallery.svg";
-import Reels from "../../../assets/images/reels-icon.svg";
-import Taged from "../../../assets/images/Tag.svg";
+import GalleryIcon from "../../../assets/images/Gallery.svg";
+import ReelsIcon from "../../../assets/images/reels-icon.svg";
+import TaggedIcon from "../../../assets/images/Tag.svg";
 import SortIcon from "../../../assets/images/Sort.svg";
 import { useGetAllUserPostsQuery } from "../../../redux/api/create-api";
 import "../../../App.css";
 
-const MyProfile = () => {
+const MyProfile: React.FC = () => {
   const { username } = useParams();
 
   const { data: user, isLoading } = useGetUserQuery(username);
-  const currentUsernamee = window.localStorage.getItem("userData")
-    ? JSON.parse(window.localStorage.getItem("userData") as string).username
-    : null;
-  const { data: posts } = useGetAllUserPostsQuery(currentUsernamee);
-  console.log(user);
+
+  const sessionUser = JSON.parse(
+    window.localStorage.getItem("userData") as string
+  );
+  const sessionUserName = sessionUser?.username || null;
+
+  const { data: userPosts } = useGetAllUserPostsQuery(sessionUserName);
+
   return (
     <div
-      className={`profile-detail ${isLoading ? "bg-white" : "bg-[#000000]"} w-[80%] px-[60px]`}
+      className={`profile-detail ${
+        isLoading ? "bg-white" : "bg-[#000000]"
+      } w-[80%] px-[60px]`}
     >
       {isLoading ? (
         <p>Loading...</p>
@@ -30,7 +35,7 @@ const MyProfile = () => {
           <div className="flex pt-[80px] gap-[32px]">
             <div>
               <img
-                src={Avatar}
+                src={user.photo || Avatar}
                 alt="Avatar"
                 className="w-[150px] h-[150px] rounded-[50%] bg-[#b9b3d7]"
                 width={150}
@@ -43,7 +48,7 @@ const MyProfile = () => {
                   {user.fullName}
                 </h1>
                 <NavLink
-                  to={`/my-profile/${user.username}/edit`} 
+                  to={`/my-profile/${user.username}/edit`}
                   className="flex items-center gap-[7px] py-[10px] bg-[#101012] rounded-[8px] px-[20px]"
                 >
                   <img src={EditIcon} alt="Edit" />
@@ -80,33 +85,32 @@ const MyProfile = () => {
                 </div>
               </div>
               <div className="text-white">
-                <h3>🌿 Capturing the essence of nature through my lens</h3>✨
-                "In every walk with nature, one receives far more than he seeks." - John Muir
+                <h3>No bio...</h3>
               </div>
               <Stories />
             </div>
           </div>
           <div className="flex justify-between mb-[50px]">
-            <div className="flex items-center ">
+            <div className="flex items-center">
               <NavLink
                 to={`/my-profile/${user.username}`}
                 className="bg-[#09090A] text-white flex items-center gap-[10px] px-[50px] py-[13px] activ rounded-l-[10px]"
               >
-                <img src={Galery} alt="Gallery" />
+                <img src={GalleryIcon} alt="Gallery" />
                 <span>Posts</span>
               </NavLink>
               <NavLink
-                to={`/my-profile/${user.username}/reels`}
+                to={`#`}
                 className="bg-[#09090A] text-white flex items-center gap-[10px] px-[50px] py-[13px] activ"
               >
-                <img src={Reels} alt="Reels" />
+                <img src={ReelsIcon} alt="Reels" />
                 <span>Reels</span>
               </NavLink>
               <NavLink
-                to={`/my-profile/${user.username}/tagged`}
+                to={`#`}
                 className="bg-[#09090A] text-white flex items-center gap-[10px] px-[50px] py-[13px] activ rounded-r-[10px]"
               >
-                <img src={Taged} alt="Tagged" />
+                <img src={TaggedIcon} alt="Tagged" />
                 <span>Tagged</span>
               </NavLink>
             </div>
@@ -120,8 +124,8 @@ const MyProfile = () => {
             </div>
           </div>
           <div className="grid grid-cols-3 gap-[20px]">
-            {posts?.map((post: any, ind: number) => (
-              <div key={ind} className="shadow-lg">
+            {userPosts?.map((post: any, index: number) => (
+              <div key={index} className="shadow-lg">
                 {post?.content[0]?.type === "IMAGE" ? (
                   <img
                     src={post?.content[0]?.url}

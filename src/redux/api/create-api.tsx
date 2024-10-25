@@ -18,15 +18,9 @@ export const fileApi = api.injectEndpoints({
       }),
       invalidatesTags: [],
     }),
-    getUserName: build.query({
-      query: (username) => ({
-        url: `/api/user/profile/${username}`,
-      }),
-      providesTags: [{ type: "User" }],
-    }),
     getPosts: build.query({
       query: (params) => ({
-        url: "/api/user/feed?limit=3000",
+        url: "/api/user/feed?limit=5000",
         params,
       }),
       providesTags: [],
@@ -44,6 +38,5 @@ export const {
   useUploadFileMutation,
   useCreatePostMutation,
   useGetPostsQuery,
-  useGetUserNameQuery,
   useGetAllUserPostsQuery,
 } = fileApi;

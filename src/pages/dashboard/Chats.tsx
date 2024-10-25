@@ -1,7 +1,7 @@
 import NotFound from "../../components/NotFound/NotFound.jsx";
 
-const Chats = () => {
-  return <NotFound/>;
+const Chats: React.FC = () => {
+  return <NotFound />;
 };
 
 export default Chats;

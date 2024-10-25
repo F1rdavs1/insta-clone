@@ -7,13 +7,4 @@ import Chats from "./Chats";
 import CreatePosts from "./CreatePosts";
 import Settings from "./Settings";
 
-export {
-  Home,
-  Explore,
-  People,
-  Saved,
-  Reels,
-  Chats,
-  CreatePosts,
-  Settings,
-};
+export { Home, Explore, People, Saved, Reels, Chats, CreatePosts, Settings };

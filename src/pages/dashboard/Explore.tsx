@@ -1,6 +1,6 @@
 import NotFound from "../../components/NotFound/NotFound.jsx";
 
-const Explore = () => {
+const Explore: React.FC = () => {
   return <NotFound/>;
 };
 

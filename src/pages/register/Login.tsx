@@ -8,7 +8,7 @@ import { setToken, setUser } from "../../redux/slice/auth-slice";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
-import { message } from "antd";  // Ant Design'dan message import qilindi
+import { message } from "antd"; 
 
 const Login = () => {
   const [loginUser] = useLoginMutation();
@@ -32,7 +32,7 @@ const Login = () => {
       window.localStorage.setItem("userData", JSON.stringify(formDataToJson));
       navigate("/");
     } catch (error) {
-      message.error("Login failed. Please try again."); // Xato xabari Ant Design orqali
+      message.error("Login failed. Please try again."); 
     } finally {
       setLoading(false);
     }
@@ -98,7 +98,7 @@ const Login = () => {
         </form>
 
         <button
-          className="flex justify-center items-center gap-3 w-full py-3 bg-white rounded-lg text-black font-semibold text-base leading-6 mt-5 mb-8 hover:bg-[#cdc9c9] transition duration-300"
+          className="flex justify-center items-center gap-3 w-[400px] py-3 bg-white rounded-lg text-black font-semibold text-base leading-6 mt-5 mb-8 hover:bg-[#cdc9c9] transition duration-300"
           type="button"
         >
           <img src={googleIcon} alt="Google Icon" width={24} height={24} />

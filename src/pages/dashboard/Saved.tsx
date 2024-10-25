@@ -1,6 +1,6 @@
 import NotFound from "../../components/NotFound/NotFound.jsx";
 
-const Saved = () => {
+const Saved: React.FC = () => {
   return <NotFound/>;
 };
 

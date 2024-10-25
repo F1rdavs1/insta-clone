@@ -1,7 +1,7 @@
 import {
   useGetAllUsersQuery,
   useFollowMutation,
-  useUnfollowMutation,
+  useGetUnfollowUsersMutation,
   useGetUserQuery,
 } from "../../redux/api/user-slice";
 import Avatar from "../../assets/images/user.png";
@@ -9,12 +9,12 @@ import PeopleAvatar from "../../assets/images/People.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const People = () => {
+const People: React.FC = () => {
   const { data = [] } = useGetAllUsersQuery(true);
   const [follow] = useFollowMutation();
-  const [unfollow] = useUnfollowMutation();
-  const currentUser = JSON.parse(localStorage.getItem("userData") || "{}");
-  const username = currentUser?.username || "";
+  const [unfollow] = useGetUnfollowUsersMutation();
+  const sessionUser = JSON.parse(localStorage.getItem("userData") || "{}");
+  const username = sessionUser?.username || "";
   const followUserData = useGetUserQuery(username);
 
   const [loading, setLoading] = useState<{ [key: string]: boolean }>({});

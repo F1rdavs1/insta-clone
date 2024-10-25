@@ -8,7 +8,7 @@ import { imageFileTypes } from "../../types";
 import CreatePostt from "../../assets/images/CreatePost.svg";
 import ImgVideo from "../../assets/images/image-video.png";
 
-function CreatePost() {
+const CreatePost: React.FC = () => {
   const navigate = useNavigate();
   const [uploadFiles] = useUploadFileMutation();
   const [createPost] = useCreatePostMutation();
@@ -82,21 +82,17 @@ function CreatePost() {
       </div>
       <form onSubmit={onFormSubmit} className="flex flex-col gap-[20px]">
         <label className="flex flex-col gap-[6px]">
-          <strong className="font-medium text-[18px] leading-[25px]">
-            Caption
-          </strong>
+          <strong className="font-medium text-[18px] leading-[25px]">Caption</strong>
           <textarea
             required
             rows={4}
             className="bg-[#101012] resize-none p-[12px] outline-none rounded-[10px]"
             value={postCaption}
             onChange={(e) => setPostCaption(e.target.value)}
-          ></textarea>
+          />
         </label>
         <label className="flex flex-col gap-[8px] relative">
-          <strong className="font-medium text-[18px] leading-[25px] ">
-            Add Photos/Videos
-          </strong>
+          <strong className="font-medium text-[18px] leading-[25px] ">Add Photos/Videos</strong>
           {mediaFiles.length > 0 ? (
             <div className="bg-[#101012] w-full flex-wrap flex gap-3 p-5 md:p-10">
               {mediaFiles.map((media, index) => (
@@ -120,7 +116,7 @@ function CreatePost() {
                     Select from computer
                   </strong>
                   <input
-                  className="rounded-[10px]"
+                    className="rounded-[10px]"
                     onChange={onMediaFilesChange}
                     type="file"
                     id="select"
@@ -145,9 +141,7 @@ function CreatePost() {
           </div>
         </label>
         <label className="flex flex-col gap-2">
-          <strong className="font-medium text-[18px] leading-[25px]">
-            Photo/Video Alt Text
-          </strong>
+          <strong className="font-medium text-[18px] leading-[25px]">Photo/Video Alt Text</strong>
           <input
             required
             className="bg-[#101012] rounded-[10px] p-4 outline-none"
@@ -167,6 +161,6 @@ function CreatePost() {
       </form>
     </div>
   );
-}
+};
 
 export default CreatePost;
