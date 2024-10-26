@@ -15,6 +15,7 @@ import ForwardIcon from "../../assets/images/Forward.svg";
 import BookmarkIcon from "../../assets/images/Bookmark.svg";
 import TelegramIcon from "../../assets/images/Telegram-icon.svg";
 import { Follower, Post, PostContent } from "../../types";
+import Loader from "../../components/Loading/Loading";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -23,7 +24,11 @@ const Home: React.FC = () => {
   const sessionUserName = sessionUserData?.username || null;
 
   const [likePost, { isLoading: isLikingPost }] = useLikePostMutation();
-  const { data: feedPosts, refetch: refetchFeed } = useGetPostsQuery(true);
+  const {
+    data: feedPosts,
+    refetch: refetchFeed,
+    isLoading: isFeedLoading,
+  } = useGetPostsQuery(true);
   const { data: followingUsersData } = useGetFollowUsersQuery(sessionUserName);
   const [likedPostsState, setLikedPostsState] = useState<
     Record<number, boolean>
@@ -62,7 +67,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col lg:flex-row w-full lg:w-[80%] mx-auto">
-      <div className="flex-1 bg-[#000000] overflow-y-auto h-[100vh] pt-[60px]">
+      <div className="flex-1 bg-[#000000] overflow-y-auto h-[100vh] pt-[60px] relative">
+        {isFeedLoading && <Loader width="100%" height="100%" />}{" "}
         <div className="flex items-center gap-[17px] w-[90vh] overflow-x-auto mx-auto stories">
           {followingUsersData?.following?.map(
             (follower: Follower, index: number) => (
@@ -90,7 +96,6 @@ const Home: React.FC = () => {
             )
           )}
         </div>
-
         <div className="flex items-center justify-between px-[53px] md:px-[70px] text-white py-[42px]">
           <h2 className="font-bold text-[30px] leading-[42px]">Home Feed</h2>
           <div className="flex items-center gap-[10px]">
@@ -102,7 +107,6 @@ const Home: React.FC = () => {
             </button>
           </div>
         </div>
-
         <div className="grid grid-cols-1 gap-10 px-[20px] md:px-[40px]">
           {feedPosts?.posts?.map((post: Post) => {
             const isPostLiked = likedPostsState[post._id];
@@ -179,7 +183,7 @@ const Home: React.FC = () => {
                         onClick={() => handleLikeToggle(post._id)}
                       >
                         {isLikingPost ? (
-                          <div className="loader">Load..</div>
+                          <div>Load..</div>
                         ) : isPostLiked ? (
                           <LikedIcon />
                         ) : (
@@ -228,21 +232,22 @@ const Home: React.FC = () => {
                       className="size-[40px] rounded-full object-cover"
                       src={post?.owner?.photo || Avatar}
                     />
-                    <div className="relative bg-dark-300 w-full rounded-lg overflow-hidden py-[11px] px-4">
+                    <div className="relative flex items-center bg-dark-300 w-full rounded-lg overflow-hidden py-[11px] px-4">
                       <input
                         name="comment"
                         type="text"
                         placeholder="Write your comment..."
-                        className="w-full outline-none pl-[16px] rounded-[8px] py-[11px] placeholder:text-[#5C5C7B] bg-[#1F1F22] text-white"
+                        className="w-full outline-none pl-[16px] rounded-[8px] py-[11px] bg-[#101012] placeholder:text-[#5C5C7B] text-white"
                       />
-                      <button className="absolute right-0">
+                      <div className="absolute right-4">
                         <img
                           src={TelegramIcon}
                           alt="Send"
-                          width={30}
-                          height={30}
+                          className="cursor-pointer"
+                          width={20}
+                          height={20}
                         />
-                      </button>
+                      </div>
                     </div>
                   </form>
                 </div>
