@@ -14,10 +14,10 @@ const EditProfile: React.FC = () => {
 
   const updateUserProfile = async (formData: FormData) => {
     const userProfileData = {
-      full_name: formData.get("full_name")?.toString(),
-      username: formData.get("username")?.toString(),
-      email: formData.get("email")?.toString(),
-      bio: formData.get("bio")?.toString(),
+      full_name: formData.get("full_name"),
+      username: formData.get("username"),
+      email: formData.get("email"),
+      bio: formData.get("bio"),
     };
 
     try {
