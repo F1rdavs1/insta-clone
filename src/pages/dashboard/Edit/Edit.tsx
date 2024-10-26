@@ -6,9 +6,10 @@ import {
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "../../../assets/images/user.png";
+import Loader from "../../../components/Loading/Loading";
 
 const EditProfile: React.FC = () => {
-  const { data: userProfile } = useGetUserProfileQuery(true);
+  const { data: userProfile, isLoading } = useGetUserProfileQuery(true);
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
   const navigate = useNavigate();
 
@@ -22,10 +23,10 @@ const EditProfile: React.FC = () => {
 
     try {
       await updateProfile(userProfileData).unwrap();
-      return true; 
+      return true;
     } catch (error) {
       console.error("Error updating profile:", error);
-      return false; 
+      return false;
     }
   };
 
@@ -40,6 +41,10 @@ const EditProfile: React.FC = () => {
       alert("Profile update failed. Please try again.");
     }
   };
+
+  if (isLoading) {
+    return <Loader width="100%" height="100%" />;
+  }
 
   return (
     <div className="w-[80%] bg-black text-white overflow-y-auto h-[100vh] px-[60px] py-[20px]">

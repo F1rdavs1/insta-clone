@@ -65,7 +65,7 @@ const Sidebar: React.FC = () => {
               width={56}
               height={56}
             />
-            <div className="">
+            <div >
               <h3 className="text-white font-bold text-[24px] pt-[20px]">
                 {data?.fullName || userData?.username}
               </h3>

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useGetUserQuery } from "../../../redux/api/user-slice";
 import Avatar from "../../../assets/images/user.png";
@@ -9,24 +10,33 @@ import TaggedIcon from "../../../assets/images/Tag.svg";
 import SortIcon from "../../../assets/images/Sort.svg";
 import { useGetAllUserPostsQuery } from "../../../redux/api/create-api";
 import "../../../App.css";
+import Loader from "../../../components/Loading/Loading"; 
 
 const MyProfile: React.FC = () => {
   const { username } = useParams();
-
   const { data: user, isLoading } = useGetUserQuery(username);
-
+  const [isFeedLoading, setIsFeedLoading] = useState(true); 
   const sessionUser = JSON.parse(
     window.localStorage.getItem("userData") as string
   );
   const sessionUserName = sessionUser?.username || null;
-
   const { data: userPosts } = useGetAllUserPostsQuery(sessionUserName);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsFeedLoading(false); 
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isFeedLoading) {
+    return <Loader width="100%" height="100%" />; 
+  }
 
   return (
     <div
-      className={`profile-detail ${
-        isLoading ? "bg-white" : "bg-[#000000]"
-      } w-[80%] px-[60px]`}
+      className={`profile-detail ${isLoading ? "bg-white" : "bg-[#000000]"} w-[80%] px-[60px]`}
     >
       {isLoading ? (
         <p>Loading...</p>
